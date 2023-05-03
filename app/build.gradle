@@ -71,5 +71,7 @@ dependencies {
 
     implementation 'org.bitcoinj:bitcoinj-core:0.16.2'
 
+    implementation "com.vanniktech:android-image-cropper:4.5.0"
+
 
 }

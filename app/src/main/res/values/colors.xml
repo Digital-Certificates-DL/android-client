@@ -27,4 +27,8 @@
     <color name="icon_secondary">#545454</color>
 
     <color name="error_primary">#FF5050</color>
+    <color name="error_secondary">#FFE0E0</color>
+
+    <color name="success_primary">#00DDA6</color>
+    <color name="success_secondary">#E5FFF8</color>
 </resources>

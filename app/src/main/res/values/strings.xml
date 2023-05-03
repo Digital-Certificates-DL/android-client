@@ -15,4 +15,11 @@
     <string name="search">Search</string>
     <string name="share">Share</string>
     <string name="qr_description">Put the code inside the frame</string>
+    <string name="scan_error">Something went wrong</string>
+    <string name="scan_error_message">Unfortunately the application could not scan the QR-code. Make sure your code is correct and try again.</string>
+    <string name="try_again">Try again</string>
+    <string name="back_home">Back home</string>
+    <string name="not_confirmed">Not confirmed</string>
+    <string name="confirmed">Confirmed</string>
+    <string name="no_internet_error">No Internet Connection</string>
 </resources>

@@ -8,17 +8,22 @@ import io.tokend.certificates.feature.home.model.CourseCertificate
 import io.tokend.certificates.feature.verify.logic.BitcoinVerifier
 import io.tokend.certificates.feature.verify.model.CertificateData
 import io.tokend.certificates.feature.verify.model.Transaction
+import java.io.IOException
 
 class VerifyCertificateUseCase(private val apiProvider: ApiProvider) {
-
+    @Throws(IOException::class)
     fun verify(certificate: CertificateData): Single<Boolean> {
 
         return Single.fromCallable {
-            BitcoinVerifier.verifyBitcoinMessage(
+            val isVerified = BitcoinVerifier.verifyBitcoinMessage(
                 certificate.message,
                 certificate.address,
                 certificate.signature
             )
+            if (!isVerified) {
+                //NOT_VERIFIED
+                return@fromCallable false
+            }
 
             val certificateList = CourseCertificate.fromJson(
                 apiProvider.certificateApi
@@ -36,12 +41,13 @@ class VerifyCertificateUseCase(private val apiProvider: ApiProvider) {
                 }
             }
 
+            //NOT_FOUND
             if (networkCertificate == null) {
                 return@fromCallable false
             }
-
+            //NO_TIMESTEMPING OK
             if (networkCertificate.transactionHash.length != 64) {
-                return@fromCallable false
+                return@fromCallable true
             }
 
             val json = apiProvider.bitcoinApi.getTransaction(networkCertificate.transactionHash)
@@ -58,7 +64,7 @@ class VerifyCertificateUseCase(private val apiProvider: ApiProvider) {
                 }
             }
 
-            false
+            return@fromCallable false
         }
     }
 }

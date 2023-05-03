@@ -7,15 +7,21 @@
     </data>
 
     <FrameLayout
+        android:background="@color/background_primary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".feature.scanQR.view.ScanQrImageFragment">
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/crop_image_button"
+            android:layout_width="100dp"
+            android:text="crop"
+            android:layout_height="100dp"/>
+
+       <com.canhub.cropper.CropImageView
+           android:id="@+id/crop_image"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"/>
 
     </FrameLayout>
 </layout>

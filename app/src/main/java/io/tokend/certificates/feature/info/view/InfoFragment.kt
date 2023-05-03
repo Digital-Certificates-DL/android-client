@@ -15,6 +15,7 @@ class InfoFragment : BaseFragment() {
 
     private lateinit var binding: FragmentInfoBinding
     private lateinit var certificate: CertificateData
+    private var isConfirmed: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,11 +26,12 @@ class InfoFragment : BaseFragment() {
         binding.lifecycleOwner = this
 
         certificate = arguments?.getSerializable(CERTIFICATE_KEY) as CertificateData ?: throw IllegalArgumentException("No Certificate")
+        isConfirmed = arguments?.getBoolean(IS_CONFIRMED_KEY) ?: throw IllegalAccessException("No Confirm data")
         binding.certificate = certificate
 
         val date = certificate.message.split(" ")[0]
         binding.dateTextView.text = date
-
+        binding.isConfirmed = isConfirmed
         initButtons()
         return binding.root
     }
@@ -53,10 +55,12 @@ class InfoFragment : BaseFragment() {
     companion object {
 
         private const val CERTIFICATE_KEY = "CERTIFICATE_KEY"
+        private const val IS_CONFIRMED_KEY = "IS_CONFIRMED_KEY"
 
-        fun newInstance(certificate: CertificateData): InfoFragment = InfoFragment().also {
+        fun newInstance(certificate: CertificateData, isConfirmed: Boolean): InfoFragment = InfoFragment().also {
             it.arguments = bundleOf(
-                CERTIFICATE_KEY to certificate
+                CERTIFICATE_KEY to certificate,
+                IS_CONFIRMED_KEY to isConfirmed
             )
         }
     }
