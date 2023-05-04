@@ -6,13 +6,11 @@ import io.tokend.certificates.di.providers.ApiProvider
 import io.tokend.certificates.extensions.decodeHex
 import io.tokend.certificates.feature.home.model.CourseCertificate
 import io.tokend.certificates.feature.verify.logic.BitcoinVerifier
-import io.tokend.certificates.feature.verify.model.CertificateData
+import io.tokend.certificates.feature.verify.model.CertificateQrData
 import io.tokend.certificates.feature.verify.model.Transaction
-import java.io.IOException
 
 class VerifyCertificateUseCase(private val apiProvider: ApiProvider) {
-    @Throws(IOException::class)
-    fun verify(certificate: CertificateData): Single<Boolean> {
+    fun verify(certificate: CertificateQrData): Single<Boolean> {
 
         return Single.fromCallable {
             val isVerified = BitcoinVerifier.verifyBitcoinMessage(

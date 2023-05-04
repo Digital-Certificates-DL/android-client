@@ -20,14 +20,14 @@ import io.tokend.certificates.feature.info.view.InfoFragment
 import io.tokend.certificates.feature.scanQR.view.ScanQrCameraActivity
 import io.tokend.certificates.feature.scanQR.view.ScanQrImageFragment
 import io.tokend.certificates.feature.verify.logic.parseCertificateUseCase
-import io.tokend.certificates.feature.verify.model.CertificateData
+import io.tokend.certificates.feature.verify.model.CertificateQrData
 import io.tokend.certificates.utils.ObservableTransformers
 
 
 class HomePageFragment : BaseFragment() {
 
     private lateinit var binding: FragmentHomePageBinding
-    //val isLoading = MutableLiveData(false)
+    val isLoading = MutableLiveData(false)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +36,7 @@ class HomePageFragment : BaseFragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_page, container, false)
         binding.lifecycleOwner = this
+        binding.fragment = this
         initButtons()
         return binding.root
     }
@@ -66,6 +67,13 @@ class HomePageFragment : BaseFragment() {
                     .add(R.id.fragment_container, fragment)
                     .addToBackStack(null)
                     .commit()
+                fragment.getResultSubject.compose(ObservableTransformers.defaultSchedulers())
+                    .subscribe({
+                        if (it != null)
+                            verify(it, isGallery = true)
+                    }, {
+                        showScanErrorDialog(isGallery = true)
+                    }).addTo(compositeDisposable)
             }
         }
 
@@ -79,58 +87,81 @@ class HomePageFragment : BaseFragment() {
         barcodeLauncher.launch(intent)
     }
 
+    private fun verify(
+        rawCertificate: String,
+        isCamera: Boolean = false,
+        isGallery: Boolean = false
+    ) {
+        if (isCamera == isGallery)
+            throw IllegalStateException("Select Camera or Gallery")
+        val certificate: CertificateQrData
+        try {
+            certificate = parseCertificateUseCase.parse(rawCertificate)
+        } catch (e: Exception) {
+            showScanErrorDialog(isCamera = true)
+            return
+        }
+
+        VerifyCertificateUseCase(apiProvider).verify(certificate)
+            .doOnSubscribe {
+                isLoading.postValue(true)
+            }
+            .doOnError {
+                isLoading.postValue(false)
+            }
+            .compose(ObservableTransformers.defaultSchedulersSingle())
+            .subscribe({
+                val infoFragment = InfoFragment.newInstance(certificate, it)
+                parentFragmentManager.beginTransaction()
+                    .add(R.id.fragment_container, infoFragment)
+                    .addToBackStack(null)
+                    .commit()
+                isLoading.postValue(false)
+            }, {
+                if (it is java.lang.RuntimeException) {
+                    toastManager.long(getString(R.string.no_internet_error))
+                } else {
+
+                    showScanErrorDialog(isCamera, isGallery)
+                }
+
+            }).addTo(compositeDisposable)
+    }
+
 
     // Register the launcher and result handler
     private val barcodeLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 if (result.data != null) {
-
-                    val res = result.data!!.getStringExtra(ScanQrCameraActivity.RESULT_CODE)
-                    val certificate: CertificateData
-                    try {
-                        certificate = parseCertificateUseCase.parse(res!!)
-                    } catch (e: Exception) {
-                        showScanErrorDialog()
-                        return@registerForActivityResult
-                    }
-
-                    VerifyCertificateUseCase(apiProvider).verify(certificate)
-                        .compose(ObservableTransformers.defaultSchedulersSingle())
-                        .subscribe({
-                            val infoFragment = InfoFragment.newInstance(certificate, it)
-                            parentFragmentManager.beginTransaction()
-                                .add(R.id.fragment_container, infoFragment)
-                                .addToBackStack(null)
-                                .commit()
-                        }, {
-
-                            if (it is java.lang.RuntimeException) {
-                                toastManager.long(getString(R.string.no_internet_error))
-                            } else {
-                                it.printStackTrace()
-                                showScanErrorDialog()
-                            }
-
-                        }).addTo(compositeDisposable)
+                    val res = result.data!!.getStringExtra(ScanQrCameraActivity.RESULT_CODE)!!
+                    verify(res, isCamera = true)
                 }
 
             }
         }
 
-    private fun showScanErrorDialog() {
+    private fun showScanErrorDialog(isCamera: Boolean = false, isGallery: Boolean = false) {
+        if (isCamera == isGallery) {
+            throw IllegalStateException("Select Camera or Gallery")
+        }
+
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.scan_error)
+            .setIcon(R.drawable.ic_scan_error)
             .setMessage(R.string.scan_error_message)
-            .setNegativeButton(resources.getString(R.string.back_home)) { dialog, which ->
+            .setNegativeButton(resources.getString(R.string.back_home)) { dialog, _ ->
                 dialog.dismiss()
             }
-            .setPositiveButton(resources.getString(R.string.try_again)) { dialog, which ->
-                openCamera()
+            .setPositiveButton(resources.getString(R.string.try_again)) { dialog, _ ->
+                if (isCamera)
+                    openCamera()
+                else
+                    openSelectImage()
+                dialog.dismiss()
             }
             .show()
     }
-
     companion object {
         fun newInstance(): HomePageFragment {
             return HomePageFragment()

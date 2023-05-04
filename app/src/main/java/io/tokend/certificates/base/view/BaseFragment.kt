@@ -6,7 +6,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.tokend.certificates.App
 import io.tokend.certificates.di.providers.ApiProvider
 import io.tokend.certificates.utils.ClickHelper
-import li.qdev.qwallet.view.ToastManager
+import io.tokend.certificates.view.ToastManager
 import javax.inject.Inject
 
 abstract class BaseFragment: Fragment() {

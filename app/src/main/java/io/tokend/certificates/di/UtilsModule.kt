@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.Provides
 import io.tokend.certificates.utils.AppLocaleManager
 import io.tokend.certificates.utils.ClickHelper
-import li.qdev.qwallet.view.ToastManager
+import io.tokend.certificates.view.ToastManager
 
 
 @Module

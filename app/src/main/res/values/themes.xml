@@ -16,9 +16,14 @@
         <item name="android:windowBackground">@color/background_primary</item>
     </style>
 
-    <style name="Theme.Certificates.Launch" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Certificates.Launch" parent="Theme.Certificates">
         <item name="android:windowBackground">@drawable/splash_screen</item>
     </style>
+
+    <style name="Theme.Certificates.Dialog.Icon.Center" parent="@style/ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="iconGravity">end</item>
+    </style>
+
 
 
     <style name="Theme.Certificates.TextTertiary.HighLight" parent="Widget.MaterialComponents.TextView">

@@ -3,8 +3,15 @@
     android:opacity="opaque">
 
     <item android:drawable="@color/accent_primary" />
+    <item android:drawable="@drawable/illustration_pattern" />
+
     <item
         android:gravity="center"
+        android:bottom="60dp"
         android:drawable="@drawable/ic_logo" />
+    <item
+        android:gravity="center"
+        android:top="60dp"
+        android:drawable="@drawable/ic_logo_text" />
 
 </layer-list>

@@ -23,7 +23,6 @@
             android:name=".feature.home.view.HomeActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|uiMode"
             android:exported="true"
-            android:theme="@style/Theme.Certificates"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

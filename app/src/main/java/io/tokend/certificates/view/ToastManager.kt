@@ -1,4 +1,4 @@
-package li.qdev.qwallet.view
+package io.tokend.certificates.view
 
 import android.content.Context
 import android.widget.Toast

@@ -1,10 +1,10 @@
 package io.tokend.certificates.feature.verify.logic
 
-import io.tokend.certificates.feature.verify.model.CertificateData
+import io.tokend.certificates.feature.verify.model.CertificateQrData
 
 object parseCertificateUseCase {
 
-    fun parse(raw: String): CertificateData {
+    fun parse(raw: String): CertificateQrData {
         val input = raw.trimIndent()
         val lines = input.lines()
 
@@ -12,7 +12,7 @@ object parseCertificateUseCase {
         val address = lines[4].trim()
         val signature = lines[7].trim()
 
-        return CertificateData(message, address, signature)
+        return CertificateQrData(message, address, signature)
     }
 
 }

@@ -1,7 +1,7 @@
 package io.tokend.certificates.feature.verify.model
 
 
-data class CertificateData(
+data class CertificateQrData(
     val message: String,
     val address: String,
     val signature: String,

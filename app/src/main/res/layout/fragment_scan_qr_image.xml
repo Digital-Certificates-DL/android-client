@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -12,16 +13,36 @@
         android:layout_height="match_parent"
         tools:context=".feature.scanQR.view.ScanQrImageFragment">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/crop_image_button"
-            android:layout_width="100dp"
-            android:text="crop"
-            android:layout_height="100dp"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-       <com.canhub.cropper.CropImageView
-           android:id="@+id/crop_image"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"/>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/crop_image_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:text="@string/read"
+                android:paddingEnd="52dp"
+                android:paddingStart="52dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <com.canhub.cropper.CropImageView
+                android:id="@+id/crop_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
 
     </FrameLayout>
 </layout>

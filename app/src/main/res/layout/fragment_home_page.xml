@@ -3,10 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="fragment"
+            type="io.tokend.certificates.feature.home.view.HomePageFragment" />
     </data>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:background="@color/background_primary"
+        android:layout_height="match_parent">
+
+        <include
+            isVisible="@{fragment.isLoading()}"
+            layout="@layout/layout_loader" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        isVisible="@{!fragment.isLoading()}"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="16dp"
@@ -117,4 +129,5 @@
         </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 </layout>

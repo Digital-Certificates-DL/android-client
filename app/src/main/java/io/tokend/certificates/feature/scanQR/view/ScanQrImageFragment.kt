@@ -2,7 +2,6 @@ package io.tokend.certificates.feature.scanQR.view
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,8 @@ import com.google.zxing.MultiFormatReader
 import com.google.zxing.NotFoundException
 import com.google.zxing.RGBLuminanceSource
 import com.google.zxing.common.HybridBinarizer
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 import io.tokend.certificates.R
 import io.tokend.certificates.base.view.BaseFragment
 import io.tokend.certificates.databinding.FragmentScanQrImageBinding
@@ -22,6 +23,12 @@ class ScanQrImageFragment : BaseFragment() {
 
     private lateinit var binding: FragmentScanQrImageBinding
     private lateinit var selectedImage: Uri
+
+    private val resultSubject = PublishSubject.create<String>()
+
+    val getResultSubject: Observable<String>
+        get() = resultSubject
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,8 +50,8 @@ class ScanQrImageFragment : BaseFragment() {
         clickHelper.setOnClickListener {
             when (it.id) {
                 binding.cropImageButton.id -> {
-                    val croppedImage = binding.cropImage.getCroppedImage()
 
+                    val croppedImage = binding.cropImage.getCroppedImage()
                     val width: Int = croppedImage!!.width
                     val height: Int = croppedImage.height
                     val pixels = IntArray(width * height)
@@ -56,13 +63,11 @@ class ScanQrImageFragment : BaseFragment() {
                     val reader = MultiFormatReader()
                     try {
                         val result = reader.decode(bBitmap)
-                        toastManager.long(
-
-                            "The content of the QR image is: " + result.getText()
-                        )
+                        resultSubject.onNext(result.text)
                     } catch (e: NotFoundException) {
-                        Log.e("TAG", "decode exception", e)
+                        resultSubject.onError(e)
                     }
+                    parentFragmentManager.popBackStack()
                 }
             }
         }
