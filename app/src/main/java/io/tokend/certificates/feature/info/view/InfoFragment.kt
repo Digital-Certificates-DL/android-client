@@ -1,16 +1,20 @@
 package io.tokend.certificates.feature.info.view
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
+import io.tokend.certificates.BuildConfig
 import io.tokend.certificates.R
 import io.tokend.certificates.base.view.BaseFragment
 import io.tokend.certificates.databinding.FragmentInfoBinding
 import io.tokend.certificates.feature.verify.model.CertificateQrData
 import io.tokend.certificates.utils.ShareUtil
+
 
 class InfoFragment : BaseFragment() {
 
@@ -44,7 +48,8 @@ class InfoFragment : BaseFragment() {
         clickHelper.addViews(
             binding.backButton,
             binding.shareButton,
-            binding.copyButton
+            binding.copyButton,
+            binding.linkTextView
         )
 
         clickHelper.setOnClickListener {
@@ -59,6 +64,11 @@ class InfoFragment : BaseFragment() {
                 binding.copyButton.id -> {
                     clipboardHelper.copyText(certificate.toString())
                     toastManager.short(getString(R.string.copied))
+                }
+                binding.linkTextView.id -> {
+                    val uri: Uri = Uri.parse(certificate.certificatePage ?: BuildConfig.CERTIFICATE_PAGE_URL)
+                    val intent = Intent(Intent.ACTION_VIEW, uri)
+                    startActivity(Intent.createChooser(intent, "Browse with"));
                 }
             }
         }
