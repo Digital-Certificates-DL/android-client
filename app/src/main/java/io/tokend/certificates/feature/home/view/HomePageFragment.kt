@@ -15,11 +15,11 @@ import io.reactivex.rxkotlin.addTo
 import io.tokend.certificates.R
 import io.tokend.certificates.base.view.BaseFragment
 import io.tokend.certificates.databinding.FragmentHomePageBinding
-import io.tokend.certificates.feature.home.logic.VerifyCertificateUseCase
 import io.tokend.certificates.feature.info.view.InfoFragment
 import io.tokend.certificates.feature.scanQR.view.ScanQrCameraActivity
 import io.tokend.certificates.feature.scanQR.view.ScanQrImageFragment
-import io.tokend.certificates.feature.verify.logic.parseCertificateUseCase
+import io.tokend.certificates.feature.verify.logic.ParseCertificateUseCase
+import io.tokend.certificates.feature.verify.logic.VerifyCertificateUseCase
 import io.tokend.certificates.feature.verify.model.CertificateQrData
 import io.tokend.certificates.utils.ObservableTransformers
 
@@ -96,7 +96,7 @@ class HomePageFragment : BaseFragment() {
             throw IllegalStateException("Select Camera or Gallery")
         val certificate: CertificateQrData
         try {
-            certificate = parseCertificateUseCase.parse(rawCertificate)
+            certificate = ParseCertificateUseCase.parse(rawCertificate)
         } catch (e: Exception) {
             showScanErrorDialog(isCamera = true)
             return
@@ -162,6 +162,7 @@ class HomePageFragment : BaseFragment() {
             }
             .show()
     }
+
     companion object {
         fun newInstance(): HomePageFragment {
             return HomePageFragment()

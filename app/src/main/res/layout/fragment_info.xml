@@ -101,7 +101,6 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -125,6 +124,8 @@
                         android:layout_height="match_parent"
                         android:text="@{certificate.message}" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
+
+
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -184,19 +185,18 @@
                         android:layout_height="match_parent"
                         android:text="@string/certificate_page" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/link_textView"
-                        android:autoLink="web"
-                        android:linksClickable="true"
-                        android:textColorLink="@color/accent_primary"
-                        style="@style/Theme.Certificates.TextTertiary"
+                        style="@style/Theme.Certificates.Text.Link"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:clickable="true"
-                        android:focusable="true"
-
+                        android:layout_marginBottom="16dp"
                         android:text="@string/hyperlink" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
 
                 <com.google.android.material.textview.MaterialTextView
@@ -204,14 +204,17 @@
                     style="@style/Theme.Certificates.TextSecondary"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="16dp"
+                    android:paddingTop="16dp"
                     android:background="@color/background_secondary"
                     android:padding="16dp"
                     tools:text="15.09.2023" />
 
+
+
                 <com.google.android.material.card.MaterialCardView
                     style="@style/Theme.Certificates.CardView.Light"
                     android:layout_width="match_parent"
+                    android:id="@+id/copy_button"
                     android:layout_height="match_parent">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
@@ -242,8 +245,12 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </com.google.android.material.card.MaterialCardView>
 
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/share_button"
                     style="@style/Theme.Certificates.CardView.Light"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -276,6 +283,9 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

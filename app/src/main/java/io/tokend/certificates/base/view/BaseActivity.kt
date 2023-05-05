@@ -6,6 +6,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.tokend.certificates.App
 import io.tokend.certificates.di.providers.ApiProvider
 import io.tokend.certificates.utils.ClickHelper
+import io.tokend.certificates.utils.ClipboardHelper
 import io.tokend.certificates.view.ToastManager
 import javax.inject.Inject
 
@@ -18,6 +19,9 @@ abstract class BaseActivity : AppCompatActivity() {
 
     @Inject
     lateinit var apiProvider: ApiProvider
+
+    @Inject
+    lateinit var clipboardHelper: ClipboardHelper
 
     protected val compositeDisposable: CompositeDisposable = CompositeDisposable()
 

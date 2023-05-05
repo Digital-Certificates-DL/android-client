@@ -2,7 +2,7 @@ package io.tokend.certificates.feature.verify.logic
 
 import io.tokend.certificates.feature.verify.model.CertificateQrData
 
-object parseCertificateUseCase {
+object ParseCertificateUseCase {
 
     fun parse(raw: String): CertificateQrData {
         val input = raw.trimIndent()

@@ -5,7 +5,9 @@ import dagger.Module
 import dagger.Provides
 import io.tokend.certificates.utils.AppLocaleManager
 import io.tokend.certificates.utils.ClickHelper
+import io.tokend.certificates.utils.ClipboardHelper
 import io.tokend.certificates.view.ToastManager
+import javax.inject.Singleton
 
 
 @Module
@@ -24,5 +26,11 @@ class UtilsModule(private val context: Context) {
     @Provides
     fun getClickHelper(): ClickHelper {
         return ClickHelper(350)
+    }
+
+    @Singleton
+    @Provides
+    fun clipboardManager(context: Context): ClipboardHelper {
+        return ClipboardHelper(context)
     }
 }

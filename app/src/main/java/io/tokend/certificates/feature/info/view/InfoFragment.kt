@@ -10,6 +10,7 @@ import io.tokend.certificates.R
 import io.tokend.certificates.base.view.BaseFragment
 import io.tokend.certificates.databinding.FragmentInfoBinding
 import io.tokend.certificates.feature.verify.model.CertificateQrData
+import io.tokend.certificates.utils.ShareUtil
 
 class InfoFragment : BaseFragment() {
 
@@ -26,7 +27,7 @@ class InfoFragment : BaseFragment() {
         binding.lifecycleOwner = this
 
         certificate = arguments?.getSerializable(CERTIFICATE_KEY) as CertificateQrData
-            ?: throw IllegalArgumentException("No Certificate")
+
         isConfirmed = arguments?.getBoolean(IS_CONFIRMED_KEY)
             ?: throw IllegalAccessException("No Confirm data")
         binding.certificate = certificate
@@ -41,7 +42,9 @@ class InfoFragment : BaseFragment() {
 
     private fun initButtons() {
         clickHelper.addViews(
-            binding.backButton
+            binding.backButton,
+            binding.shareButton,
+            binding.copyButton
         )
 
         clickHelper.setOnClickListener {
@@ -49,10 +52,19 @@ class InfoFragment : BaseFragment() {
                 binding.backButton.id -> {
                     parentFragmentManager.popBackStack()
                 }
+                binding.shareButton.id -> {
+                    ShareUtil.shareText(requireContext(), certificate.toString())
+                }
+
+                binding.copyButton.id -> {
+                    clipboardHelper.copyText(certificate.toString())
+                    toastManager.short(getString(R.string.copied))
+                }
             }
         }
 
     }
+
     companion object {
 
         private const val CERTIFICATE_KEY = "CERTIFICATE_KEY"

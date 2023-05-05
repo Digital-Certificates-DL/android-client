@@ -38,6 +38,15 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+
+    <style name="Theme.Certificates.Text.Link" parent="Widget.MaterialComponents.TextView">
+        <item name="fontFamily">@font/roboto_500</item>
+        <item name="android:autoLink">web</item>
+        <item name="android:linksClickable">true</item>
+        <item name="android:textColorLink">@color/accent_primary</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="Theme.Certificates.TextHeader" parent="Widget.MaterialComponents.TextView">
         <item name="android:textSize">24sp</item>
         <item name="fontFamily">@font/nt_somic_medium</item>

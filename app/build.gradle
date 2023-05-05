@@ -5,6 +5,7 @@ apply plugin: 'kotlin-parcelize'
 apply plugin: 'com.android.application'
 
 
+
 android {
     namespace 'io.tokend.certificates'
     compileSdk 33
@@ -21,11 +22,33 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
     buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        debug {
+            apply from: "app_config.gradle"
+            applyAppConfig(android.buildTypes.debug)
+            signingConfig signingConfigs.debug
+            debuggable true
         }
+
+        QA {
+            apply from: "app_config.gradle"
+            applyAppConfig(android.buildTypes.QA)
+            signingConfig signingConfigs.debug
+            debuggable false
+        }
+
+
+        release {
+            apply from: "app_config.gradle"
+            applyAppConfig(android.buildTypes.release)
+            signingConfig signingConfigs.debug
+            minifyEnabled true
+            shrinkResources true
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
