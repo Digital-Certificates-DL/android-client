@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import io.reactivex.Single
 import io.tokend.certificates.di.providers.ApiProvider
 import io.tokend.certificates.extensions.decodeHex
-import io.tokend.certificates.feature.home.model.CourseCertificate
+import io.tokend.certificates.feature.verify.model.CourseCertificate
 import io.tokend.certificates.feature.verify.model.CertificateQrData
 import io.tokend.certificates.feature.verify.model.Transaction
 import org.bitcoinj.core.Address
@@ -12,6 +12,7 @@ import org.bitcoinj.core.Base58
 import org.bitcoinj.core.ECKey.signedMessageToKey
 import org.bitcoinj.core.NetworkParameters
 import org.bitcoinj.script.Script
+
 
 class VerifyCertificateUseCase(private val apiProvider: ApiProvider) {
 
@@ -32,11 +33,18 @@ class VerifyCertificateUseCase(private val apiProvider: ApiProvider) {
     fun verify(certificate: CertificateQrData): Single<Boolean> {
 
         return Single.fromCallable {
-            val isVerified = verifyBitcoinMessage(
-                certificate.message,
-                certificate.address,
-                certificate.signature
-            )
+            var isVerified = false
+            try {
+                isVerified = verifyBitcoinMessage(
+                    certificate.message,
+                    certificate.address,
+                    certificate.signature
+                )
+            }
+            catch (e: Exception) {
+                return@fromCallable false
+            }
+
             if (!isVerified) {
                 //NOT_VERIFIED
                 return@fromCallable false

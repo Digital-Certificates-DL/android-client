@@ -2,28 +2,26 @@ package io.tokend.certificates.feature.scanQR.view
 
 import android.Manifest
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.hardware.Camera
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.ResultPoint
+import com.google.zxing.client.android.Intents
 import com.google.zxing.integration.android.IntentIntegrator
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
-import com.journeyapps.barcodescanner.camera.CameraManager
-import com.journeyapps.barcodescanner.camera.CameraSettings
 import io.tokend.certificates.R
 import io.tokend.certificates.base.view.BaseActivity
 import io.tokend.certificates.databinding.ActivityScanQrCameraBinding
 import io.tokend.certificates.utils.PermissionManager
 
-
 class ScanQrCameraActivity() : BaseActivity() {
 
     private lateinit var binding: ActivityScanQrCameraBinding
 
-    private lateinit var cameraSettings: CameraSettings
     private val cameraPermission =
         PermissionManager(Manifest.permission.CAMERA, PERMISSION_REQUEST_CODE)
 
@@ -31,9 +29,8 @@ class ScanQrCameraActivity() : BaseActivity() {
     override fun onCreateAllowed(savedInstanceState: Bundle?) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_scan_qr_camera)
         binding.lifecycleOwner = this
-
+        this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         initScanner()
-        cameraSettings = binding.zxingBarcodeScanner.barcodeView.cameraSettings
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
@@ -46,10 +43,12 @@ class ScanQrCameraActivity() : BaseActivity() {
     }
 
     private fun initScanner() {
+
         binding.zxingBarcodeScanner.initializeFromIntent(
             IntentIntegrator(this)
                 .setBeepEnabled(false)
-
+                // for mixed qr codes (light and dark)
+                .addExtra(Intents.Scan.SCAN_TYPE, 2)
                 .setCameraId(Camera.CameraInfo.CAMERA_FACING_BACK)
                 .setDesiredBarcodeFormats(listOf(BarcodeFormat.QR_CODE.name))
                 .createScanIntent()
@@ -108,6 +107,7 @@ class ScanQrCameraActivity() : BaseActivity() {
 
     private val scanViewCallback = object : BarcodeCallback {
 
+
         override fun barcodeResult(result: BarcodeResult) {
             finishWithAccess(result.text)
         }
@@ -116,9 +116,7 @@ class ScanQrCameraActivity() : BaseActivity() {
     }
 
 
-
     companion object {
-        const val ACTIVITY_REQUEST_CODE = 56
         private const val PERMISSION_REQUEST_CODE = 404
         const val RESULT_CODE = "RESULT_CODE"
     }

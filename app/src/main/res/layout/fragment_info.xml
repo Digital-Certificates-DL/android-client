@@ -155,6 +155,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
                     android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="24dp"
                     android:orientation="vertical">
 
                     <com.google.android.material.textview.MaterialTextView
@@ -172,10 +173,11 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/certification_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
+
                     android:layout_marginEnd="16dp"
                     android:orientation="vertical">
 
@@ -185,13 +187,13 @@
                         android:layout_height="match_parent"
                         android:text="@string/certificate_page" />
 
-                    <com.google.android.material.textview.MaterialTextView
+                    <TextView
                         android:id="@+id/link_textView"
                         style="@style/Theme.Certificates.Text.Link"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="16dp"
-                        android:text="@string/hyperlink" />
+                        android:text="@string/hyperlink"
+                        android:layout_marginBottom="16dp" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <com.google.android.material.divider.MaterialDivider

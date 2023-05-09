@@ -1,5 +1,6 @@
 package io.tokend.certificates.feature.home.view
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
@@ -14,6 +15,7 @@ class HomeActivity : BaseActivity() {
         binding.lifecycleOwner = this
         initStartFragment()
         initNavigationBar()
+        this.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
     }
 
 

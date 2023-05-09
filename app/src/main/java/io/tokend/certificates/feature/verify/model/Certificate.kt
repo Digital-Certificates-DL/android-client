@@ -1,4 +1,4 @@
-package io.tokend.certificates.feature.home.model
+package io.tokend.certificates.feature.verify.model
 
 import org.json.JSONObject
 

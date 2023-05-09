@@ -24,6 +24,6 @@
     <string name="no_internet_error">No Internet Connection</string>
     <string name="wait">Wait a moment</string>
     <string name="read">Read</string>
-    <string name="hyperlink"><a href="https://dlt-academy.com/certificates/">link</a></string>
-    <string name="copied">Codied</string>
+    <string name="hyperlink"><a href="https://NONE">link</a></string>
+    <string name="copied">Copied</string>
 </resources>

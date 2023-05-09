@@ -9,7 +9,7 @@ import com.journeyapps.barcodescanner.Size
 import kotlin.math.roundToInt
 
 
-class BorderedBaracodeView @JvmOverloads constructor(
+class BorderedBarcodeView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -17,7 +17,7 @@ class BorderedBaracodeView @JvmOverloads constructor(
 
 
     override fun getFramingRectSize(): Size {
-        return Size(dpToPx(186), dpToPx(186))
+        return Size(dpToPx(250), dpToPx(250))
     }
 
     override fun calculateFramingRect(

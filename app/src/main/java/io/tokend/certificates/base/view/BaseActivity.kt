@@ -23,7 +23,7 @@ abstract class BaseActivity : AppCompatActivity() {
     @Inject
     lateinit var clipboardHelper: ClipboardHelper
 
-    protected val compositeDisposable: CompositeDisposable = CompositeDisposable()
+    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

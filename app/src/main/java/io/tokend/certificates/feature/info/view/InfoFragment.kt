@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.databinding.DataBindingUtil
-import io.tokend.certificates.BuildConfig
 import io.tokend.certificates.R
 import io.tokend.certificates.base.view.BaseFragment
 import io.tokend.certificates.databinding.FragmentInfoBinding
@@ -31,7 +30,7 @@ class InfoFragment : BaseFragment() {
         binding.lifecycleOwner = this
 
         certificate = arguments?.getSerializable(CERTIFICATE_KEY) as CertificateQrData
-
+            ?: throw IllegalStateException("No certificate found")
         isConfirmed = arguments?.getBoolean(IS_CONFIRMED_KEY)
             ?: throw IllegalAccessException("No Confirm data")
         binding.certificate = certificate
@@ -40,8 +39,14 @@ class InfoFragment : BaseFragment() {
         binding.dateTextView.text = date
         binding.isConfirmed = isConfirmed
         initButtons()
-        binding.linkTextView.movementMethod
+        initLink()
         return binding.root
+    }
+
+    private fun initLink() {
+        if (certificate.certificatePage!!.isEmpty()) {
+            binding.certificationContainer.visibility = View.GONE
+        }
     }
 
     private fun initButtons() {
@@ -66,7 +71,10 @@ class InfoFragment : BaseFragment() {
                     toastManager.short(getString(R.string.copied))
                 }
                 binding.linkTextView.id -> {
-                    val uri: Uri = Uri.parse(certificate.certificatePage ?: BuildConfig.CERTIFICATE_PAGE_URL)
+                    if (certificate.certificatePage!!.isEmpty())
+                        return@setOnClickListener
+                    val uri: Uri =
+                        Uri.parse(certificate.certificatePage)
                     val intent = Intent(Intent.ACTION_VIEW, uri)
                     startActivity(Intent.createChooser(intent, "Browse with"));
                 }

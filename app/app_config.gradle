@@ -10,6 +10,7 @@ ext {
     certificate_api_url = "https://script.googleusercontent.com/macros/echo?user_content_key=Cocd0goMZy80t9vCrBlkDhQ-eRx5LYH6YK057rFBgyEaGobDGz1MjQJt-z8zzU5HXkxt8V_D5icURWMPaKW1pa9TbXufEyfKm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnMExAVbLgu_OvrTyJbFzp7VnQMXP5N6ZBiDL1daUbxC5bLyUtlW9p6DC7wiA2qVziWAiUva1N7ZbOOfA_3npVNjd8iUjuBvOBtz9Jw9Md8uu&lib=MqxSBsS-_kO-yCSPTYdB8Zta9yFOYf39W"
     certificate_page_url = "https://dlt-academy.com/certificates"
     bitcoin_api_url = "https://blockchain.info"
+    main_address = "1BooKnbm48Eabw3FdPgTSudt9u4YTWKBvf"
 
 }
 
@@ -25,10 +26,14 @@ ext.applyAppConfig = { buildConfig ->
 
     def b = buildConfig
 
+    b.buildConfigField 'String', 'MAIN_ADDRESS', "\"${main_address}\""
+
     b.buildConfigField 'String', 'CERTIFICATE_API_URL', "\"${certificate_api_url}\""
 
     b.buildConfigField 'String', 'CERTIFICATE_PAGE_URL', "\"${certificate_page_url}\""
 
     b.buildConfigField 'String', 'BITCOIN_API_URL', "\"${bitcoin_api_url}\""
+
+
 
 }
