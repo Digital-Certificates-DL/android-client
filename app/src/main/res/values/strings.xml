@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Certificates</string>
+    <string name="language_code">en</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="select_scan_option">Select scan option</string>
+    <string name="scan_description">You can scan the QR-code with your camera or upload the required image</string>
+    <string name="using_camera">Using the camera</string>
+    <string name="upload_image">Upload image</string>
+    <string name="qr_code">QR-code</string>
+    <string name="message">message:</string>
+    <string name="address">address:</string>
+    <string name="signature">signature:</string>
+    <string name="certificate_page">certificate page:</string>
+    <string name="copy_text">Copy text</string>
+    <string name="search">Search</string>
+    <string name="share">Share</string>
+    <string name="qr_description">Put the code inside the frame</string>
+    <string name="scan_error">Something went wrong</string>
+    <string name="scan_error_message">Unfortunately the application could not scan the QR-code. Make sure your code is correct and try again.</string>
+    <string name="try_again">Try again</string>
+    <string name="back_home">Back home</string>
+    <string name="not_confirmed">Not confirmed</string>
+    <string name="confirmed">Confirmed</string>
+    <string name="no_internet_error">No Internet Connection</string>
+    <string name="wait">Wait a moment</string>
+    <string name="read">Read</string>
+    <string name="hyperlink"><a href="https://NONE">link</a></string>
+    <string name="copied">Copied</string>
+</resources>
