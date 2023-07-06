@@ -2,6 +2,7 @@ package io.tokend.certificates.feature.verify.logic
 
 import com.google.gson.Gson
 import io.reactivex.Single
+import io.tokend.certificates.BuildConfig
 import io.tokend.certificates.di.providers.ApiProvider
 import io.tokend.certificates.extensions.decodeHex
 import io.tokend.certificates.feature.verify.model.CourseCertificate
@@ -16,10 +17,8 @@ import org.bitcoinj.script.Script
 
 class VerifyCertificateUseCase(private val apiProvider: ApiProvider) {
 
-    private val mainAddress = "1BooKnbm48Eabw3FdPgTSudt9u4YTWKBvf"
-
     private fun verifyBitcoinMessage(message: String, address: String, signature: String): Boolean {
-        if (mainAddress != address) {
+        if (BuildConfig.MAIN_ADDRESS != address) {
             return false
         }
         val ecKey = signedMessageToKey(message, signature)
