@@ -47,6 +47,7 @@ class ScanQrImageFragment : BaseFragment() {
     private fun initButtons() {
         clickHelper.addViews(binding.cropImageButton)
 
+
         clickHelper.setOnClickListener {
             when (it.id) {
                 binding.cropImageButton.id -> {

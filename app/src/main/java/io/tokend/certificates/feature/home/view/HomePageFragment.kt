@@ -81,7 +81,6 @@ class HomePageFragment : BaseFragment() {
         pickImage.launch("image/*")
     }
 
-
     private fun openCamera() {
         val intent = Intent(context, ScanQrCameraActivity::class.java)
         barcodeLauncher.launch(intent)
@@ -121,7 +120,6 @@ class HomePageFragment : BaseFragment() {
                 if (it is java.lang.RuntimeException) {
                     toastManager.long(getString(R.string.no_internet_error))
                 } else {
-
                     showScanErrorDialog(isCamera, isGallery)
                 }
 
